@@ -1,3 +1,3 @@
 module.exports = (errorName, errorMessage) => {
-    console.log(`${errorName}: ${errorMessage}`)
+    console.error(`${errorName}: ${errorMessage}`)
 }

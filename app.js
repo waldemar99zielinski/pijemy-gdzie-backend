@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
+const compression = require('compression')
 //routers
 const placeRouter = require('./routes/placeRouter')
 const discountRouter = require('./routes/discountRouter')
@@ -41,6 +42,10 @@ app.use(hpp({
         
     ]
 }))
+
+//compression
+app.use(compression())
+
 //routes
 const apiRoute = '/api/v1'
 //app.use(`${apiRoute}/places`, placeRouter)
