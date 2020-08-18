@@ -1,6 +1,49 @@
 const Discount = require('./../models/discount')
 const { Model } = require('mongoose')
+const ErrorHandler = require('../Errors&Logs/errorHandler')
 
+exports.getAllDiscounts = async (req, res) => {
+	try{
+		const discounts = await Discount.find().populate({path: 'place', select: '-googleReference'}) 
+
+		res.status(200).json({
+			status: 'Success',
+			
+			data: {
+				discounts
+			}
+
+		})
+
+	}catch(err){
+		next(new ErrorHandler('Error', 400))
+	}
+}
+
+
+
+exports.getOneDiscount = async (req,res, next) => {
+	try{
+		const discountToFind = await  Discount.findById(req.params.id).populate('place').populate('descriptionLong')
+
+		if(!discountToFind){
+			
+			return next(new ErrorHandler('Object not found.', 404))
+		}
+
+		res.status(200).json({
+			status: `Discount found successfully`,
+			
+			data: {
+				discount: discountToFind
+			}
+
+		})
+	}catch(err){
+		
+		next(new ErrorHandler('Error', 404))
+	}
+} 
 
 exports.postDiscount = async (req,res) =>{
 	try{
@@ -22,27 +65,6 @@ exports.postDiscount = async (req,res) =>{
 		})
 	}
 	
-}
-
-exports.getAllDiscounts = async (req, res) => {
-	try{
-		const discounts = await Discount.find().populate({path: 'place', select: '-googleReference'}) 
-
-		res.status(200).json({
-			status: 'Success',
-			
-			data: {
-				discounts
-			}
-
-		})
-
-	}catch(err){
-		res.status(400).json({
-			status: 'Error',
-			message: err
-		})
-	}
 }
 
 exports.updateDiscount = async (req, res) => {
@@ -68,23 +90,3 @@ exports.updateDiscount = async (req, res) => {
 		})
 	}
 }
-
-exports.getOneDiscount = async (req,res) => {
-	try{
-		const discountToFind = await  Discount.findById(req.params.id).populate('place').populate('descriptionLong')
-
-		res.status(200).json({
-			status: `Discount found successfully`,
-			
-			data: {
-				discount: discountToFind
-			}
-
-		})
-	}catch(err){
-		res.status(404).json({
-			status: 'Error',
-			message: err
-		})
-	}
-} 
