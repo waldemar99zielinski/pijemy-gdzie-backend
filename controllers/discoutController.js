@@ -4,7 +4,7 @@ const ErrorHandler = require('../Errors&Logs/errorHandler')
 
 exports.getAllDiscounts = async (req, res) => {
 	try{
-		const discounts = await Discount.find().populate({path: 'place', select: '-googleReference'}) 
+		const discounts = await Discount.find().populate({path: 'place', select: '-googleReference -_id -__v'}).select('-__v')
 
 		res.status(200).json({
 			status: 'Success',
@@ -24,7 +24,7 @@ exports.getAllDiscounts = async (req, res) => {
 
 exports.getOneDiscount = async (req,res, next) => {
 	try{
-		const discountToFind = await  Discount.findById(req.params.id).populate('place').populate('descriptionLong')
+		const discountToFind = await  Discount.findById(req.params.id).populate({path: 'place', select: '-__v'}).select('-__v')
 
 		if(!discountToFind){
 			

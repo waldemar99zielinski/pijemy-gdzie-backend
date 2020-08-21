@@ -17,20 +17,15 @@ const discountSchema = new mongoose.Schema({
         enum: ['Beer', 'Vodka','Wine', 'Drinks', 'Other']
         
     },
-    descriptionShort: {
+    description: {
         type: String,
-    },
-    descriptionLong: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Description'
-       
-
     },
     price: {
         type: Number,
         min: 0
         
     },
+    avaliableDays: [String]
     
     //TODO: rating
 
