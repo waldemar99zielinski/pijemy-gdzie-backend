@@ -8,10 +8,6 @@ router
     .route('/')
     .get(discountController.getAllDiscounts)
 
-router
-    .route('/:id')
-    .get(discountController.getOneDiscount)
-
 
 
 module.exports = router
