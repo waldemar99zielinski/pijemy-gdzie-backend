@@ -1,4 +1,4 @@
-module.exports = (errorName, errorMessage, next) => {
+module.exports = (errorName, errorMessage) => {
     console.error(`${errorName}: ${errorMessage}`)
-    next()
+    
 }
