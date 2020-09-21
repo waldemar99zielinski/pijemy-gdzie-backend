@@ -1,6 +1,7 @@
 const Discount = require('./../models/discount')
 const { Model } = require('mongoose')
 const ErrorHandler = require('../Errors&Logs/errorHandler')
+const getDayOfTheWeek = require('../functions/getDayOfTheWeek')
 
 exports.getAllDiscounts = async (req, res) => {
 	try{
@@ -88,5 +89,27 @@ exports.updateDiscount = async (req, res) => {
 			status: 'Error',
 			message: err
 		})
+	}
+}
+
+exports.getAvailableDiscounts = async (req, res, next) => {
+	try{
+		
+		
+		const updatedDiscount = await Discount.find({
+			avaliableDays: {$in: ['all',getDayOfTheWeek()]}
+		})
+
+		res.status(200).json({
+			status: `Success`,
+			
+			data: {
+				discount: updatedDiscount
+			}
+
+		})
+
+	}catch(err){
+		next(new ErrorHandler('Error', 400))
 	}
 }

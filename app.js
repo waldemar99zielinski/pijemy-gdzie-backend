@@ -10,7 +10,7 @@ const compression = require('compression')
 //routers
 const placeRouter = require('./routes/placeRouter')
 const discountRouter = require('./routes/discountRouter')
-const descriptionRouter = require('./routes/descriptionRouter')
+
 
 //errors
 const ErrorHandler = require('./Errors&Logs/errorHandler')

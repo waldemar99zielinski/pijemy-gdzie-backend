@@ -7,7 +7,8 @@ const router = express.Router()
 router
     .route('/')
     .get(discountController.getAllDiscounts)
-
-
+router
+    .route('/available')
+    .get(discountController.getAvailableDiscounts)
 
 module.exports = router
