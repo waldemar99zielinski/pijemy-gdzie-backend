@@ -7,14 +7,17 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const compression = require('compression')
+const passport = require('passport')
 //routers
 const placeRouter = require('./routes/placeRouter')
 const discountRouter = require('./routes/discountRouter')
-
+//auth
+const authRouter = require('./authentication/authRouter')
 
 //errors
 const ErrorHandler = require('./Errors&Logs/errorHandler')
 const errorController = require('./Errors&Logs/errorController')
+
 const app = express();
 
 app.use(helmet())
@@ -43,13 +46,17 @@ app.use(hpp({
     ]
 }))
 
+app.use(passport.initialize())
 //compression
 app.use(compression())
 
 //routes
-const apiRoute = '/api/v1'
+const apiRouteV1 = '/api/v1'
+const apiRouteV2 = '/api/v2'
 //app.use(`${apiRoute}/places`, placeRouter)
-app.use(`${apiRoute}/discounts`, discountRouter)
+app.use(`${apiRouteV1}/discounts`, discountRouter)
+app.use(`${apiRouteV2}/discounts`, discountRouter)
+app.use(`${apiRouteV2}/auth`, authRouter)
 //app.use(`${apiRoute}/descriptions`, descriptionRouter)
 
 
