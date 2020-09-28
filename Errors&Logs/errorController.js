@@ -1,5 +1,5 @@
 const errorDevelopment = (err, res) =>{
-    console.log(err)
+    console.log(err + err.stack)
     res.status(err.statusCode).json({
         status: err.status,
         error: err,
@@ -19,7 +19,7 @@ const errorProduction = (err, res) => {
     }
     //programming errors TODO: log it properly
     else{
-        console.error('error', err)
+        console.error('error', +err)
 
         res.status(500).json({
             status: 'error',

@@ -8,6 +8,6 @@ module.exports = () => {
 
     const today = days[day]
     
-
-    return day
+    
+    return today
 }

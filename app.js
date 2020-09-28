@@ -42,11 +42,12 @@ app.use(xss())
 //SECURITY: data sanitize: parameter polution
 app.use(hpp({
     whitelist: [
-        
+        'category'
     ]
 }))
-
+//passport init
 app.use(passport.initialize())
+
 //compression
 app.use(compression())
 
@@ -57,7 +58,7 @@ const apiRouteV2 = '/api/v2'
 app.use(`${apiRouteV1}/discounts`, discountRouter)
 app.use(`${apiRouteV2}/discounts`, discountRouter)
 app.use(`${apiRouteV2}/auth`, authRouter)
-//app.use(`${apiRoute}/descriptions`, descriptionRouter)
+
 
 
 app.all('*', (req, res, next)=>{
@@ -66,6 +67,6 @@ app.all('*', (req, res, next)=>{
     next(new ErrorHandler(`Invalid path: ${req.originalUrl}`, 404))
 })
 
-app.use(errorController)
+//app.use(errorController)
 
 module.exports = app;
