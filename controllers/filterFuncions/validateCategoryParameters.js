@@ -2,7 +2,7 @@ const { model } = require("../../models/discount")
 
 //chceck weather given categories are compatible with the model
 module.exports = (...categoryArray) => {
-    const modelCategories = ['Beer', 'Vodka','Wine', 'Drinks', 'Other']
+    const modelCategories = require('../../models/discountsCategories')
     
     
     const toComapre = categoryArray.toString().split(',')

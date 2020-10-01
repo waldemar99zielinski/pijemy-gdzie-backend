@@ -1,0 +1,1 @@
+module.exports = ['Beer', 'Vodka','Wine', 'Drinks', 'Food','Other']

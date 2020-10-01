@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-
+const DiscountReview = require("./discountReview");
+const discountReview = require('./discountReview')
 const discountSchema = new mongoose.Schema({
 	
 	title: {
@@ -14,7 +15,7 @@ const discountSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['Beer', 'Vodka','Wine', 'Drinks', 'Other']
+        enum: ['Beer', 'Vodka','Wine', 'Drinks', 'Food','Other']
         
     },
     description: {
@@ -25,7 +26,12 @@ const discountSchema = new mongoose.Schema({
         min: 0
         
     },
-    avaliableDays: [String]
+    avaliableDays: [String],
+    discountReview: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'DiscountReview',
+
+    },
     
     //TODO: rating
 
@@ -33,6 +39,7 @@ const discountSchema = new mongoose.Schema({
 
 
 });
+
 
 const Discount = mongoose.model("Discount", discountSchema);
 

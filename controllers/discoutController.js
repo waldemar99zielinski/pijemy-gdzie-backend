@@ -3,6 +3,9 @@ const ErrorHandler = require('../Errors&Logs/errorHandler')
 const getDayOfTheWeek = require('../functions/getDayOfTheWeek')
 const validateCategoryParameters =require('./filterFuncions/validateCategoryParameters')
 const validateAvailableParameter = require('./filterFuncions/validateAvailableParameter')
+const DiscountReview = require('../models/discountReview')
+const { review } = require('./discountReviewController')
+
 
 exports.getAllDiscounts = async (req, res, next) => {
 	try{
@@ -12,12 +15,14 @@ exports.getAllDiscounts = async (req, res, next) => {
 		const categoryParameters = validateCategoryParameters(req.query.category)
 		const onlyAvailableDiscounst = validateAvailableParameter(req.query.available)
 		console.log('discountController: available: '+ onlyAvailableDiscounst)
+		console.log('discountController: category: '+ categoryParameters)
 		if(onlyAvailableDiscounst){
 			discounts = await Discount.find({
 				category: {$in : categoryParameters},
 				avaliableDays: {$in: ['all',getDayOfTheWeek()]}
 			}).populate({path: 'place', select: '-_id -__v'}).select('-__v')
 		}else{
+			console.log('discountController: nawet niedostepne' )
 			discounts = await Discount.find({
 				category: {$in : categoryParameters}
 			}).populate({path: 'place', select: '-_id -__v'}).select('-__v')
@@ -72,6 +77,10 @@ exports.postDiscount = async (req,res) =>{
 		
 
 		const postDiscount = await Discount.create(req.body)
+		const discountReview = await DiscountReview.create({})
+
+		postDiscount.discountReview = discountReview.id
+		postDiscount.save()
 
 		res.status(201).json({
 			status: 'New discount successfully created',
@@ -82,8 +91,8 @@ exports.postDiscount = async (req,res) =>{
 	 	
 	}catch(err) {
 		res.status(400).json({
-			status: 'Bad request',
-			message: err
+			status: err,
+			message: err.message
 		})
 	}
 	
@@ -113,24 +122,3 @@ exports.updateDiscount = async (req, res) => {
 	}
 }
 
-exports.getAvailableDiscounts = async (req, res, next) => {
-	try{
-		
-		
-		const updatedDiscount = await Discount.find({
-			avaliableDays: {$in: ['all',getDayOfTheWeek()]}
-		})
-
-		res.status(200).json({
-			status: `Success`,
-			
-			data: {
-				discount: updatedDiscount
-			}
-
-		})
-
-	}catch(err){
-		next(new ErrorHandler('Error', 400))
-	}
-}
