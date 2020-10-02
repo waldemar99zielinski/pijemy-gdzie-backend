@@ -35,6 +35,38 @@ discountReviewSchema.methods.reviewDiscount = function(review) {
 
     return this
 }
+discountReviewSchema.methods.changeReview = function(newReview) {
+  
+    if(newReview == 'like'){
+        this.dislikes--
+        this.likes++
+        this.rating = calculateRating(this.likes, this.dislikes)
+        //this.save()
+    }else if(newReview == 'dislike'){
+        this.likes--
+        this.dislikes++
+        this.rating = calculateRating(this.likes, this.dislikes)
+    }else{
+        console.log("discountRating model: reviewDiscount: wrong input: " + newReview)
+    }
+
+    return this
+}
+discountReviewSchema.methods.deleteReview = function(oldReview) {
+  
+    if(oldReview == 'like'){
+        this.likes--
+        this.rating = calculateRating(this.likes, this.dislikes)
+        //this.save()
+    }else if(oldReview == 'dislike'){
+        this.dislikes--
+        this.rating = calculateRating(this.likes, this.dislikes)
+    }else{
+        console.log("discountRating model: reviewDiscount: wrong input: " + oldReview)
+    }
+
+    return this
+}
 
 const DiscountReview = mongoose.model("DiscountReview", discountReviewSchema);
 

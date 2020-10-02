@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
     //TODO: ogarnij indexy
     //index: {unique: true}
   },
+  
+
 
 });
 

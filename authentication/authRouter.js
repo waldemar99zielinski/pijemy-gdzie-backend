@@ -2,6 +2,7 @@ const express = require('express')
 const passportConfig = require('./passportConfig')
 const validateUser = require('./validateUser')
 const signTokenJWT = require('./signTokenJWT')
+const e = require('express')
 const router = express.Router()
 
 router
@@ -32,7 +33,7 @@ router
                 next(new ErrorHandler('Facebook auth callback error', 400))
             }
         }catch(err){
-            next(new ErrorHandler('Facebook auth callback error', 400))
+            next(new ErrorHandler('Facebook auth callback error: '+ err.message, 400))
         }
     
     

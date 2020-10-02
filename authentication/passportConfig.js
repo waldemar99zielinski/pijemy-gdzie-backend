@@ -27,7 +27,7 @@ passport.use( new FacebookStrategy({
         
     }
 ))
-
+//TODO: expiration doesnt work, not so important
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET,

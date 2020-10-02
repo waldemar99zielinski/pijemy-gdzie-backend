@@ -49,7 +49,7 @@ exports.getAllDiscounts = async (req, res, next) => {
 
 exports.getOneDiscount = async (req,res, next) => {
 	try{
-		const discountToFind = await  Discount.findById(req.params.id).populate({path: 'place', select: '-__v'}).select('-__v')
+		const discountToFind = await  Discount.findById(req.params.id).populate({path: 'place', select: '-__v'}).populate({path: 'discountReview', select: '-__v'}).select('-__v')
 
 		if(!discountToFind){
 			
@@ -65,9 +65,7 @@ exports.getOneDiscount = async (req,res, next) => {
 
 		})
 	}catch(err){
-		const updatedDiscount = await Discount.find({
-			avaliableDays: {$in: ['all',getDayOfTheWeek()]}
-		})
+		
 		next(new ErrorHandler('Error', 404))
 	}
 } 

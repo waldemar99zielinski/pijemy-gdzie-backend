@@ -4,6 +4,8 @@ const discountController = require('../controllers/discoutController')
 const discountReviewController = require('../controllers/discountReviewController')
 const router = express.Router()
 
+const passportConfig = require('../authentication/passportConfig')
+
 router
     .route('/')
     .get(discountController.getAllDiscounts)
@@ -12,7 +14,7 @@ router
     .get(discountController.getOneDiscount)
 router
     .route('/:id/review')
-    .post(discountReviewController.review)
+    .post(passportConfig.JWTAuthentication,discountReviewController.review)
 router
     .route('/')
     .post(discountController.postDiscount)
