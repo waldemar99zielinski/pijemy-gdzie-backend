@@ -1,8 +1,9 @@
 const passport = require('passport')
-const FacebookStrategy = require('passport-facebook')
+const FacebookToken = require('passport-facebook-token')
 const JWTStrategy = require('passport-jwt').Strategy
 const {ExtractJwt} = require('passport-jwt')
 const User = require('../models/user')
+const ErrorHandler = require('../Errors&Logs/errorHandler')
 
 passport.serializeUser((user, cb) =>{
     cb(null, user)
@@ -12,21 +13,23 @@ passport.deserializeUser((user, cb) =>{
     cb(null, user)
 })
 
-passport.use( new FacebookStrategy({
+passport.use('facebookToken', new FacebookToken({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_SECRET_KEY,
-    callbackURL: "/api/v2/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'birthday']
 },
-    function(accessToken, refreshToken, profile, cb) {
-
+    function(accessToken, refreshToken, profile, done) {
+        try{
+            
+          done(null, profile)
+        }catch(err){
+            done(err, false, err.message)
+        }
        
-        
-        //console.log('passportCongif: user: '+ JSON.stringify(user))
-        return cb(null, profile)
+       
         
     }
 ))
+
 //TODO: expiration doesnt work, not so important
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -35,7 +38,7 @@ passport.use(new JWTStrategy({
 
 }, async (payload, done) => {
     console.log('passportConfig: '+ JSON.stringify(payload))
-    const user = await User.findOne(payload.sub)
+    const user = await User.findById(payload.sub)
     if(user){
         return done(null, user)
     }else{
@@ -45,6 +48,6 @@ passport.use(new JWTStrategy({
 
 }))
 
-//TODO: failure login callback
-exports.FacebookAuthentication = passport.authenticate("facebook", { scope: [ 'user_birthday'], failureRedirect: '/fail_login' })
+
+exports.FacebookAuthentication = passport.authenticate('facebookToken', { session: false})
 exports.JWTAuthentication = passport.authenticate("jwt", {session: false})
