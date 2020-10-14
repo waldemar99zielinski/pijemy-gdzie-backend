@@ -11,7 +11,7 @@ router
     .get(discountController.getAllDiscounts)
 router
     .route('/:id')
-    .get(discountController.getOneDiscount)
+    .get(passportConfig.optionalAuthentication,discountController.getOneDiscount)
 router
     .route('/:id/review')
     .post(passportConfig.JWTAuthentication,discountReviewController.review)

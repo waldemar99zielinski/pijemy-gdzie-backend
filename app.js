@@ -12,6 +12,7 @@ const passport = require('passport')
 const placeRouter = require('./routes/placeRouter')
 const discountRouter = require('./routes/discountRouter')
 const discountReviewRouter = require('./routes/reviewRouter')
+const userRouter = require('./routes/userRouter')
 //auth
 const authRouter = require('./authentication/authRouter')
 
@@ -59,7 +60,8 @@ const apiRouteV2 = '/api/v2'
 app.use(`${apiRouteV1}/discounts`, discountRouter)
 app.use(`${apiRouteV2}/discounts`, discountRouter)
 app.use(`${apiRouteV2}/auth`, authRouter)
-app.use(`${apiRouteV2}/review`, discountReviewRouter)
+app.use(`${apiRouteV2}/user`, userRouter)
+
 
 
 app.all('*', (req, res, next)=>{

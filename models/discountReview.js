@@ -30,7 +30,8 @@ discountReviewSchema.methods.reviewDiscount = function(review) {
         this.dislikes++
         this.rating = calculateRating(this.likes, this.dislikes)
     }else{
-        console.log("discountRating model: reviewDiscount: wrong input: " + review)
+        //wrong input
+        return null
     }
 
     return this
@@ -47,7 +48,8 @@ discountReviewSchema.methods.changeReview = function(newReview) {
         this.dislikes++
         this.rating = calculateRating(this.likes, this.dislikes)
     }else{
-        console.log("discountRating model: reviewDiscount: wrong input: " + newReview)
+        //wrong input
+        return null
     }
 
     return this
@@ -62,7 +64,8 @@ discountReviewSchema.methods.deleteReview = function(oldReview) {
         this.dislikes--
         this.rating = calculateRating(this.likes, this.dislikes)
     }else{
-        console.log("discountRating model: reviewDiscount: wrong input: " + oldReview)
+        //wrong input
+        return null
     }
 
     return this

@@ -5,6 +5,7 @@ const validateCategoryParameters =require('./filterFuncions/validateCategoryPara
 const validateAvailableParameter = require('./filterFuncions/validateAvailableParameter')
 const DiscountReview = require('../models/discountReview')
 const { review } = require('./discountReviewController')
+const userReview = require('../models/userReview')
 
 
 exports.getAllDiscounts = async (req, res, next) => {
@@ -56,13 +57,20 @@ exports.getOneDiscount = async (req,res, next) => {
 			return next(new ErrorHandler('Object not found.', 404))
 		}
 
+		const user = req.user
+		let review = null
+
+		if(user){
+			review = await userReview.findOne({userId: user.id, discountId: discountToFind.id})
+		}
 		res.status(200).json({
-			status: `Discount found successfully`,
+			status: `Success`,
 			
 			data: {
 				discount: discountToFind
-			}
-
+			},
+			userReview: review
+			
 		})
 	}catch(err){
 		

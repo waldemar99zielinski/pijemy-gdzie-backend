@@ -1,7 +1,10 @@
 const passport = require('passport')
+
 const FacebookToken = require('passport-facebook-token')
 const JWTStrategy = require('passport-jwt').Strategy
 const {ExtractJwt} = require('passport-jwt')
+const AnonymousStrategy = require('passport-anonymous').Strategy
+
 const User = require('../models/user')
 const ErrorHandler = require('../Errors&Logs/errorHandler')
 
@@ -37,17 +40,21 @@ passport.use(new JWTStrategy({
     ignoreExpiration: false,
 
 }, async (payload, done) => {
-    console.log('passportConfig: '+ JSON.stringify(payload))
+    //console.log('passportConfig: '+ JSON.stringify(payload))
     const user = await User.findById(payload.sub)
     if(user){
         return done(null, user)
     }else{
-        console.log("nie ma użytkownika :<")
+        //console.log("nie ma użytkownika :<")
         return done(null, false)
     }
 
 }))
 
+//for optional routes
+passport.use(new AnonymousStrategy())
+
 
 exports.FacebookAuthentication = passport.authenticate('facebookToken', { session: false})
 exports.JWTAuthentication = passport.authenticate("jwt", {session: false})
+exports.optionalAuthentication = passport.authenticate(['jwt', 'anonymous'], {session: false})

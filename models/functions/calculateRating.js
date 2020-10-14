@@ -1,5 +1,5 @@
 module.exports = (likes, dislikes) => {
-    console.log('calculateRating: ' + likes + ' ' + dislikes)
+    //console.log('calculateRating: ' + likes + ' ' + dislikes)
     let total  = likes + dislikes
     
     if(total== 0){
