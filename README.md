@@ -123,8 +123,23 @@ if already review
 - GET /api/v2/user/
 auth requried, returns user info
 - GET /api/v2/user/reviews
-auth requried, returns user reviews
-
+auth requried, returns user's reviews
+- GET /api/v2/user/fav
+auth requried, returns user's favourite discounts ids
+- POST /api/v2/user/fav
+auth requried
+JSON: 
+{
+"discountId":"5f68ba1418539d6fbfe5aa52"
+   }
+validate input, adds discount id to favourites if value is not present
+- DELETE /api/v2/user/fav
+auth requried
+JSON: 
+{
+"discountId":"5f68ba1418539d6fbfe5aa52"
+   }
+validate input, deletes discount id from favourites
 
 
     

@@ -11,8 +11,10 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String
-  }
-
+  },
+  favDiscounts: [{
+    type: mongoose.Schema.Types.ObjectId
+  }]
 
 });
 
