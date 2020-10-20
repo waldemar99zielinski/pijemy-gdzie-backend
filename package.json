@@ -26,6 +26,7 @@
     "passport": "^0.4.1",
     "passport-anonymous": "^1.0.1",
     "passport-facebook-token": "^4.0.0",
+    "passport-google-token": "^0.1.2",
     "passport-jwt": "^4.0.0",
     "xss-clean": "^0.1.1"
   },
