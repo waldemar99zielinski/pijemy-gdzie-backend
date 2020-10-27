@@ -15,8 +15,9 @@ router
 router
     .route('/:id/review')
     .post(passportConfig.JWTAuthentication,discountReviewController.review)
+/*
 router
     .route('/')
     .post(discountController.postDiscount)
-
+*/
 module.exports = router
