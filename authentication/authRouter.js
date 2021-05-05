@@ -7,16 +7,18 @@ const authController = require('../controllers/authController')
 
 router
     .route('/facebook')
-    .get(passportConfig.FacebookAuthentication, authController.validateUserAndSignJWT)
-
-
+    .post(passportConfig.FacebookAuthentication, authController.validateUserAndSignJWT)
+router
+    .route('/google')
+    .post(passportConfig.GoogleAuthentication, authController.validateUserAndSignJWT)
 router
     .route('/secret')
-    .get(passportConfig.JWTAuthentication, (req, res, next)=>{
+    .get(passportConfig.optionalAuthentication, (req, res, next)=>{
         console.log('authRouter: /secret: ' + req.user)
         res.status(200).json({
             status: 'secret',
             
+            user: req.user
         
 
         })

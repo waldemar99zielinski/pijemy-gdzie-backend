@@ -3,14 +3,21 @@ const SignTokenJWT = require('../authentication/signTokenJWT')
 const ErrorHandler = require('../Errors&Logs/errorHandler')
 
 exports.validateUserAndSignJWT = async (req, res, next)=> {
+     
     try{
-        console.log('authRouter: /fb auth: ' + JSON.stringify(req.user))
+       console.log('authRouter: /fb auth: ' + JSON.stringify(req.user.emails[0]))
         if(req.user){
-            const facebookId  = req.user.id
+            const id  = req.user.id
             const name = req.user.displayName
-            const email = req.user.email
+            const email = req.user.emails[0].value
+            const provider = req.user.provider
 
-            const user = await validateAndReturnUser(facebookId, name, email)
+            
+
+            const user = await validateAndReturnUser(provider,id, name, email)
+
+            console.log('authRouter: user: ' + email)
+            
 
             res.status(200).json({
                 status: 'Success',

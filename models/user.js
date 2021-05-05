@@ -5,14 +5,22 @@ const userSchema = new mongoose.Schema({
 
   facebookId: {
     type: String, 
-    required: true, 
+  
+    //TODO: ogarnij indexy
+    //index: {unique: true}
+  },
+  googleId: {
+    type: String, 
+  
     //TODO: ogarnij indexy
     //index: {unique: true}
   },
   email: {
     type: String
-  }
-
+  },
+  favDiscounts: [{
+    type: mongoose.Schema.Types.ObjectId
+  }]
 
 });
 
