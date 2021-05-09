@@ -16,7 +16,7 @@ $ npm start
 ### DB Models
 ##### Discount:
 ```
-title: {
+    title: {
         type: String,
         required: [true, 'Discount must have a title']
     },
