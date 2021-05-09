@@ -1,7 +1,10 @@
 # PijemyGdzie - backend
 Node.js REST API with: 
+
 [ExpressJS](https://expressjs.com/)
+
 [MongoDB/MongooseJS](https://mongoosejs.com/) 
+
 [PassportJS](http://www.passportjs.org/)
 
 
@@ -13,7 +16,7 @@ $ npm start
 ### DB Models
 ##### Discount:
 ```
-	title: {
+title: {
         type: String,
         required: [true, 'Discount must have a title']
     },
@@ -62,7 +65,7 @@ $ npm start
 ```
 ##### User:
 ```
-name: {type: String}, 
+  name: {type: String}, 
 
   facebookId: {
     type: String, 
@@ -80,7 +83,7 @@ name: {type: String},
 
     },
 
-    discountId: {
+   discountId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Discount',
 
